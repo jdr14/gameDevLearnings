@@ -17,13 +17,25 @@ public class number_wizard : MonoBehaviour {
      */
 	void Start () 
     {
+        // Opening message of the guessing game
+        startGame();
+	}
+
+    void startGame()
+    {
+        // Maintain original values if/when the game is restarted
+        currentGuess = 500;
+        maxGuess = 1000;
+        minGuess = 1;
+
         Debug.Log("Moin!  Welcome to the number wizard " + userName + " !");
         Debug.Log("To start the game, pick a number...");
         Debug.Log("Highest number you can pick is: " + maxGuess);
         Debug.Log("Lowest number you can pick is: " + minGuess);
         Debug.Log("Tell me if your number is higher or lower than 500");
         Debug.Log("Push Up = Higher, Push Down = Lower, Push Enter = Correct");
-	}
+        maxGuess = maxGuess + 1;
+    }
 	
 	/*
 	 * Update deals with anything that deals with live update (i.e. this
@@ -40,10 +52,7 @@ public class number_wizard : MonoBehaviour {
             // Update the value for the minimum guess
             minGuess = currentGuess;
 
-            // Update the value for the current guess
-            currentGuess = (minGuess + maxGuess) / 2;
-
-            Debug.Log("Current Guess = " + currentGuess);
+            nextGuess();
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow)) 
         {
@@ -52,15 +61,21 @@ public class number_wizard : MonoBehaviour {
             // Update the value for the maximum guess
             maxGuess = currentGuess;
 
-            // Update the value for the current guess
-            currentGuess = (maxGuess + minGuess) / 2;
-
-            Debug.Log("Current Guess = " + currentGuess);
+            nextGuess();
         }
         else if (Input.GetKeyDown(KeyCode.Return))
         {
-            Debug.Log("Enter/Return key was pressed.");
+            Debug.Log("I guessed it correctly!!!");
+            startGame();  // Start the game again
         }
         // Else is not needed to end an if/else if code block     
 	}
+
+    void nextGuess()
+    {
+        // Update the value for the current guess
+        currentGuess = (maxGuess + minGuess) / 2;
+
+        Debug.Log("Is it higher or lower than " + currentGuess);
+    }
 }
